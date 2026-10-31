@@ -1,0 +1,32 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "icons/icon-128.png",
+         "16": "icons/icon-16.png",
+         "32": "icons/icon-32.png",
+         "48": "icons/icon-48.png"
+      },
+      "default_popup": "popup/popup.html",
+      "default_title": "Raindrop 书签同步"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "description": "在 Chrome 书签和 Raindrop.io 之间进行双向同步",
+   "host_permissions": [ "https://api.raindrop.io/*" ],
+   "icons": {
+      "128": "icons/icon-128.png",
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1cC+JuOJZCzgmcvCdc2RZ/a+AcdGXdUBv7ABGNoLtjOnyEaQQ/bGe4FVshqtbeO1WnAh/JNJiZZZF9DtpCUumyLOCToAAUJ3Nu7M5iKQ2ddtcMqtAH+RUa1iJkE8uto4JPhnWv9CupN6YxGGNBA5wMSAnkKhWRVs8Q2q5TA6Sj77LnlzRa0zzM1KVFe+Shmtlbe8mlXuCvCp2v2v0FiPsVusoe3iNfwyvt0q6xK+MXWpM0hR6Vm9LWFzuqHOsVpYJ4Ow1dr4GuiNws6//wfoE2qzXdmpVyO3YMNzje+ObGdLc2jWpUKaRV9maFIHIajy3y+ihNBpkAXTK1IzRVoPgwIDAQAB",
+   "manifest_version": 3,
+   "name": "Raindrop 书签同步",
+   "options_ui": {
+      "open_in_tab": true,
+      "page": "options/options.html"
+   },
+   "permissions": [ "bookmarks", "storage", "alarms" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.2.0"
+}

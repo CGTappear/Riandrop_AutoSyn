@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Raindrop 书签同步 - 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options-container">
+    <header class="header">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#0066FF"/><path d="M2 17L12 22L22 17" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12L12 17L22 12" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><h1>Raindrop 书签同步</h1><p class="subtitle">设置</p></div>
+      </div>
+    </header>
+    <main class="main">
+      <section class="section">
+        <h2 class="section-title">API 令牌</h2>
+        <p class="section-description">请输入 Raindrop.io 测试令牌。请在 <a href="https://app.raindrop.io/settings/integrations" target="_blank">Raindrop.io → 设置 → 集成</a> 创建应用，然后复制<strong>测试令牌</strong>。</p>
+        <div class="card">
+          <div id="connection-status" class="connection-status"><span class="status-indicator disconnected"></span> <span class="status-text">未连接</span></div>
+          <div class="form-group"><label for="api-token">测试令牌</label> <input type="password" id="api-token" class="input" placeholder="在此粘贴测试令牌…"></div>
+          <div class="actions-grid"><button id="save-token-btn" class="btn btn-primary">保存并连接</button> <button id="disconnect-btn" class="btn btn-secondary hidden">断开连接</button></div>
+        </div>
+      </section>
+      <section class="section" id="mapping-section">
+        <h2 class="section-title">文件夹映射</h2>
+        <p class="section-description">在左右两边勾选收藏夹后建立双向映射。只勾一边时，会在另一边自动新建同名收藏夹。</p>
+        <div class="card mapping-card">
+          <div class="tree-panels">
+            <div class="tree-panel">
+              <div class="tree-panel-head"><span class="tree-panel-title">Chrome 书签</span><span class="tree-panel-count" id="chrome-checked-count"></span></div>
+              <div id="chrome-tree" class="folder-tree" role="tree" aria-label="Chrome 书签文件夹"><p class="empty-state">连接后显示</p></div>
+            </div>
+            <div class="tree-panel">
+              <div class="tree-panel-head"><span class="tree-panel-title">Raindrop 收藏夹</span><span class="tree-panel-count" id="raindrop-checked-count"></span></div>
+              <div id="raindrop-tree" class="folder-tree" role="tree" aria-label="Raindrop 收藏夹"><p class="empty-state">连接后显示</p></div>
+            </div>
+          </div>
+          <div class="mapping-toolbar">
+            <label class="check-label"><input type="checkbox" id="include-subfolders" checked> 包含全部子收藏夹（按相对路径匹配）</label>
+            <label class="inline-field" for="conflict-strategy">冲突策略：
+              <select id="conflict-strategy" class="select select-compact">
+                <option value="skip">保留双方 / 跳过冲突</option>
+                <option value="chrome">Chrome 优先</option>
+                <option value="raindrop">Raindrop 优先</option>
+                <option value="newest">最新修改优先</option>
+              </select>
+            </label>
+          </div>
+          <div class="mapping-toolbar">
+            <button id="add-mapping-btn" class="btn btn-tool">⇄ 建立勾选收藏夹映射</button>
+            <button id="remove-selected-btn" class="btn btn-tool">删除选中映射</button>
+            <span class="toolbar-spacer"></span>
+            <button id="refresh-trees-btn" class="btn btn-tool">刷新收藏夹树</button>
+            <button id="auto-match-btn" class="btn btn-tool">✨ 按名称自动匹配全部收藏夹…</button>
+            <button id="auto-icon-btn" class="btn btn-tool">🎨 自动匹配收藏夹图标…</button>
+          </div>
+          <p class="table-caption">已配置的双向映射（点击下方条目可以定位到两边收藏夹）</p>
+          <div class="mapping-table-wrap">
+            <table class="mapping-table">
+              <thead><tr>
+                <th class="col-check"><input type="checkbox" id="select-all-mappings" aria-label="全选映射"></th>
+                <th>Chrome 收藏夹</th><th>Raindrop 收藏夹</th><th class="col-scope">范围</th><th class="col-strategy">冲突策略</th>
+              </tr></thead>
+              <tbody id="mappings-tbody"><tr class="empty-row"><td colspan="5">尚未配置映射</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="settings-section">
+        <h2 class="section-title">同步设置</h2>
+        <div class="card">
+          <div class="setting-row"><div class="setting-info"><label>启用同步</label><p class="setting-description">自动同步浏览器书签和 Raindrop.io</p></div><label class="toggle"><input type="checkbox" id="enable-sync"> <span class="toggle-slider"></span></label></div>
+          <div class="setting-row"><div class="setting-info"><label for="sync-interval">同步间隔</label><p class="setting-description">检查 Raindrop.io 更改的频率</p></div><select id="sync-interval" class="select select-small"><option value="1">每 1 分钟</option><option value="5">每 5 分钟</option><option value="10">每 10 分钟</option><option value="15">每 15 分钟</option><option value="30">每 30 分钟</option><option value="60">每小时</option></select></div>
+          
+          <div class="setting-row"><div class="setting-info"><label>调试模式</label><p class="setting-description">启用详细日志，便于排查问题</p></div><label class="toggle"><input type="checkbox" id="debug-mode"> <span class="toggle-slider"></span></label></div>
+        </div>
+        <div class="info-box"><strong>冲突策略</strong>按映射单独设置（见上方映射表格）。只有两端都改动、或一端删除另一端修改时才会用到；单边改动始终正常同步。</div>
+      </section>
+      <section class="section" id="stats-section">
+        <h2 class="section-title">统计数据</h2>
+        <div class="card"><div class="stats-grid"><div class="stat-item"><span class="stat-value" id="stat-total">0</span> <span class="stat-label">已同步总数</span></div><div class="stat-item"><span class="stat-value" id="stat-last-sync">从未</span> <span class="stat-label">上次同步</span></div></div></div>
+        <div class="card"><h3 class="card-title">操作</h3><div class="actions-grid"><button id="sync-now-btn" class="btn btn-primary">立即同步</button> <button id="full-resync-btn" class="btn btn-secondary">完整重新同步</button></div><div class="action-hints"><p class="action-hint"><strong>立即同步</strong>：立即检查双方的变更并同步；自动同步仍会在后台持续运行。</p><p class="action-hint"><strong>完整重新同步</strong>：从头重建所有关联，并按网址重新匹配书签。适用于两端数据不一致时；首次匹配只会合并，不会删除数据。</p></div><p id="sync-status-msg" class="sync-status-msg" role="status" aria-live="polite"></p></div>
+      </section>
+      <section class="section" id="sync-errors-section"><h2 class="section-title">同步错误</h2><div class="card"><div id="sync-errors-list" class="sync-errors-list" aria-live="polite"><p class="empty-state">没有错误</p></div><p class="action-hint">仅显示最近一次同步的问题。成功同步后会自动清空。</p></div></section>
+    </main>
+    <footer class="footer"><span>Raindrop 书签同步 v<span id="version">1.0.0</span></span> <span class="separator">•</span> <a href="https://raindrop.io" target="_blank" rel="noopener">Raindrop.io</a></footer>
+  </div>
+  <dialog id="app-dialog" class="app-dialog">
+    <form method="dialog" class="dialog-form">
+      <h3 id="dialog-title" class="dialog-title"></h3>
+      <div id="dialog-body" class="dialog-body"></div>
+      <div class="dialog-actions"><button value="cancel" class="btn btn-secondary" id="dialog-cancel">取消</button><button value="ok" class="btn btn-primary" id="dialog-ok">确定</button></div>
+    </form>
+  </dialog>
+  <script src="../options.js"></script>
+</body>
+</html>
